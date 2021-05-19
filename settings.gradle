@@ -1,0 +1,2 @@
+rootProject.name = "FlappyBird2"
+include ':app'

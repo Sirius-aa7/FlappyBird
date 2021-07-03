@@ -40,6 +40,9 @@ public class GameOver extends AppCompatActivity {
     }
 
     public void exit(View view){
+
+        //gameActivityContext.deleteFile(null);
+        //gameActivityContext.close();
         finish();
     }
 }

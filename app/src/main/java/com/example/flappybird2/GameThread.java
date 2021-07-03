@@ -28,7 +28,12 @@ public class GameThread extends Thread{
                 synchronized (surfaceHolder){
                     AppConstants.getGameEngine().updateAndDrawBackgroundImage(canvas);
                     AppConstants.getGameEngine().updateAndDrawBird(canvas);
-                    AppConstants.getGameEngine().updateAndDrawTubes(canvas);
+                    //AppConstants.setGameConstants();
+                    try {
+                        AppConstants.getGameEngine().updateAndDrawTubes(canvas);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
                     //unlocking the canvas
                     surfaceHolder.unlockCanvasAndPost(canvas);
                 }
@@ -55,4 +60,6 @@ public class GameThread extends Thread{
     public void setIsRunning(boolean state){
          isRunning= state;
     }
+
+
 }

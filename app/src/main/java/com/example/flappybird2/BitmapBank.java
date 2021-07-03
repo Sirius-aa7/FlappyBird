@@ -10,6 +10,7 @@ public class BitmapBank {
     Bitmap [] bird;
     Bitmap tubeTop, tubeBottom;
     Bitmap redTubeTop, redTubeBottom;
+    //int smallGapBetweenTopBotTubes,gapBetweenTopBotTubes,bigGapBetweenTopBotTubes;//if not try Bitmap;newly added
 
     public BitmapBank(Resources res) {
         background= BitmapFactory.decodeResource(res, R.drawable.background);
@@ -18,8 +19,12 @@ public class BitmapBank {
         bird[1] = BitmapFactory.decodeResource(res, R.drawable.bird2finze);
         tubeTop= BitmapFactory.decodeResource(res, R.drawable.pipe2fi);
         tubeBottom=BitmapFactory.decodeResource(res, R.drawable.pipe1fi);
-        redTubeTop= BitmapFactory.decodeResource(res, R.drawable.pipe2fi);
+        redTubeTop= BitmapFactory.decodeResource(res, R.drawable.pipe2fired);
         redTubeBottom=BitmapFactory.decodeResource(res, R.drawable.pipe1fired);
+
+        //smallGapBetweenTopBotTubes=500;
+        //gapBetweenTopBotTubes=600;
+        //bigGapBetweenTopBotTubes=700;
     }
 
     //return for red tubes
@@ -33,7 +38,7 @@ public class BitmapBank {
     }
 
 
-    //return tupetop bitmap
+    //return tubeTop bitmap
 
     public Bitmap getTubeTop() {
         return tubeTop;

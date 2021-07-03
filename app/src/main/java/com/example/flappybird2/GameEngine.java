@@ -8,8 +8,14 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.util.Log;
 
+import com.example.flappybird2.AppConstants;
+
+import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.Random;
+
+//import static com.example.flappybird2.AppConstants.gapBetweenTopBotTubes;
+
 
 
 public class GameEngine {
@@ -23,8 +29,9 @@ public class GameEngine {
     int score;
     int scoringTube;
     Paint scorePaint;
+    AppConstants appConstants;
 
-    public GameEngine() {
+    public GameEngine() {//extends AppConstants()
         backgroundImage = new BackgroundImage();
         bird = new Bird();
         // 0 = Not Started
@@ -49,7 +56,7 @@ public class GameEngine {
         scorePaint.setTextAlign(Paint.Align.LEFT);
     }
 
-    public void updateAndDrawTubes(Canvas canvas) {
+    public void updateAndDrawTubes(Canvas canvas) throws InterruptedException {
         if (gameState == 1) {
             if ((tubes.get(scoringTube).getTubeX() < bird.getX() + AppConstants.getBitmapBank().getBirdWidth())
                     && (tubes.get(scoringTube).getTopTubeOffsetY() > bird.getY()
@@ -62,33 +69,52 @@ public class GameEngine {
                 intent.putExtra("score",score);
                 context.startActivity(intent);
                 ((Activity) context).finish();
+                AppConstants.getSoundBank().playHit();
+                Thread.sleep(700);// adds a delay of 0.7 seconds
+                AppConstants.getSoundBank().playDie();
             } else if (tubes.get(scoringTube).getTubeX() < bird.getX() - AppConstants.getBitmapBank().getTubeWidth()) {
                 score++;
                 scoringTube++;
                 if (scoringTube > AppConstants.numberOfTubes - 1) {
                     scoringTube = 0;
                 }
+                AppConstants.getSoundBank().playPoint();
             }
             for (int i = 0; i < AppConstants.numberOfTubes; i++) {
                 if (tubes.get(i).getTubeX() < -AppConstants.getBitmapBank().getTubeWidth()) {
                     tubes.get(i).setTubeX(tubes.get(i).getTubeX() + AppConstants.numberOfTubes * AppConstants.distBetTubes);
+                    AppConstants.gettingGap();
                     int topTubeOffsetY = AppConstants.minTubeOffsetY +
                             random.nextInt(AppConstants.maxTubeOffsetY - AppConstants.minTubeOffsetY + 1);
                     tubes.get(i).setTopTubeOffsetY(topTubeOffsetY);
                     tubes.get(i).setTubeColor();
+                   // tubes.get(i).setTubeGap();
                 }
                 tubes.get(i).setTubeX(tubes.get(i).getTubeX() - AppConstants.tubeVelocity);
+                //AppConstants.gettingGap();de comment this if want changing wrt time
                 if (tubes.get(i).getTubeColor() == 0) {
                     canvas.drawBitmap(AppConstants.getBitmapBank().getTubeTop(), tubes.get(i).getTubeX(), tubes.get(i).getTopTubeY(), null);
                     canvas.drawBitmap(AppConstants.getBitmapBank().getTubeBottom(), tubes.get(i).getTubeX(), tubes.get(i).getBottomTubeY(), null);
                 } else {
-                    canvas.drawBitmap(AppConstants.getBitmapBank().getRedTubeBottom(), tubes.get(i).getTubeX(), tubes.get(i).getTopTubeY(), null);
+                    canvas.drawBitmap(AppConstants.getBitmapBank().getRedTubeTop(), tubes.get(i).getTubeX(), tubes.get(i).getTopTubeY(), null);
                     canvas.drawBitmap(AppConstants.getBitmapBank().getRedTubeBottom(), tubes.get(i).getTubeX(), tubes.get(i).getBottomTubeY(), null);
-
                 }
-            }
+                //appConstants.getGapBetweenTopBotTubes(tubes);
+                //if (tubes.get(i).getTubeGap() == 0) {
+
+                 //   gapBetweenTopBotTubes=600;
+                    //gapBetweenTopBotTubes = 600;
+                    // tube.setTubeGap();
+                }     // else {
+                    //appConstants.getGapBetweenTopBotTubes();
+                    //    gapBetweenTopBotTubes = 150;
+                   //}
+
+                   //if (tubes.get(i).getTubeGap() == 0){ }
             canvas.drawText("PT: " + score, 0, 110, scorePaint);
-        }
+            }
+
+
     }
 
     public void updateAndDrawBackgroundImage(Canvas canvas) {

@@ -7,6 +7,7 @@ public class Tube {
     private int tubeX, topTubeOffsetY;// var 2 is top tube bottom edge coordinate.
     private Random random;
     private int tubeColor;
+  //  private int tubeGap; newly added
 
     public Tube(int tubeX, int topTubeOffsetY) {
         this.tubeX = tubeX;
@@ -35,7 +36,7 @@ public class Tube {
     }
 
     public int getBottomTubeY(){
-        return topTubeOffsetY+AppConstants.gapBetweenTopBotTubes;
+        return topTubeOffsetY+AppConstants.gapBetweenTopBotTubes;//600
     }
 
     public void setTubeX(int tubeX) {
@@ -45,6 +46,10 @@ public class Tube {
     public void setTopTubeOffsetY(int topTubeOffsetY) {
         this.topTubeOffsetY = topTubeOffsetY;
     }
+
+    //    public void setTubeGap(){tubeGap= random.nextInt(2);}//new addition
+
+    //  public int getTubeGap(){return tubeGap;}//new addition
 
 
 }
